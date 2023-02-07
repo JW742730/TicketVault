@@ -9,26 +9,37 @@ setTimeout(SplashScreen.hideAsync, 2000);
 const PlaceholderImage = require('./assets/concert.png');
 
 export default function App() {
-  
+  const [ticketAmount, onChangeTicketAmount] = React.useState(0)
+  const [ticketCost, onChangeTicketCost] = React.useState()
   
   return (
     <View style={styles.container}>
       <Text style={styles.ticketVaultText}>Ticket Vault</Text>
-      <Image source={PlaceholderImage} style={styles.concertContainer} />
-      <Pressable style={styles.container}
-        onPress={() => {
-          let ticketAmount = 0
-          let ticketCost = ticketAmount * 99.99
-        }}>
-       <Text style={styles.buttonStyle}>Find The Cost</Text>
-      </Pressable>
-      <Text style={styles.ticketPrice}>Ticket Cost: $299.97</Text>
-      <StatusBar style="auto" />
+      
       <TextInput
         style={styles.numberOfTickets}
         placeholder="Number of Tickets"
-        onChangeText={newText => ticketAmount(newText)}
+        onChangeText={onChangeTicketAmount}
+        value={ticketAmount}
         />
+        
+        <Pressable style={styles.container}
+        onPress={() => {
+          //onChangeTicketAmount(ticketAmount)
+          onChangeTicketCost((ticketAmount * 99.99).toFixed(2))
+        }}>
+       
+      
+      <Text style={styles.buttonStyle}>Find The Cost</Text>
+      {ticketCost ? (
+
+        <Text style={styles.ticketPrice}>Ticket Cost: ${ticketCost} </Text>
+      ) : (null)
+}
+      <StatusBar style="auto" />
+      <Image source={PlaceholderImage} style={styles.concertContainer} />
+      </Pressable>
+      
       
     </View>
   );
@@ -42,33 +53,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   concertContainer: {
-    position: 'absolute',
-    bottom: 10,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    
+    marginTop: 185
   },
   buttonStyle: {
-    flex: 1,
     backgroundColor: '#f98b88',
     fontSize: 30,
     padding: 7,
-    position: 'absolute',
-    top: 210,
+    marginTop: 20
   },
   ticketVaultText: {
-    position: 'absolute',
     fontSize: 50,
-    top: 30
+    marginTop: 30,
   },
   ticketPrice: {
-    position: 'absolute',
     fontSize: 30,
-    top: 310
+    marginTop: 40,
   },
   numberOfTickets: {
-    position: 'absolute',
-    top: 120,
+    marginTop: 22,
     fontSize: 30,
     borderStyle: 'solid',
     borderWidth: 1,
